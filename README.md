@@ -153,7 +153,21 @@ technical office, the employee has to insert their card in a time clock which
 will record the time they came in. When it's time to leave, the employee will
 "punch out."
 
-For simplicity's sake, we'll make these assumptions:
+For simplicity's sake, weArgument(s)**
+  * A 4-element Array of a `String`, `String`, `String`, and `Number`
+    corresponding to a first name, family name, title, and pay rate per hour
+* **Returns**
+  * JavaScript `Object` with keys:
+    * `firstName`
+    * `familyName`
+    * `title`
+    * `payPerHour`
+    * `timeInEvents`
+    * `timeOutEvents`
+* **Behavior**
+  * Loads `Array` elements into corresponding `Object` properties.
+    _Additionally_, initialize empty `Array`s on the properties `timeInEvents`
+    and `timeOutEvents`'ll make these assumptions:
 
 1. Employees always check in **and** check out.
 2. Employees always check in and out on the hour.
@@ -177,12 +191,42 @@ few lessons.
 If you have the time, you can learn more about JavaScript and remove the
 simplifying assumptions we wrote above. You can expand your learning by:
 
-* Raising an exception if a `timeIn` is found without a matching `timeOut`
-  * [Exception Handling in JavaScript][error]
-* Figuring out how to turn a time stamp into a construct that allows for you to
-  handle cross-day times and start and end times that aren't on the hour
-  * [Date Class Documentation][date]
-* Raising errors if the time stamp is in an invalid format
+* function createEmployeeRecord(array) {
+    let employeeRecord = {
+        firstName: array[0],
+        familyName: array[1],
+        title: array[2],
+        payPerHour: array[3],
+        timeInEvents: [],
+        timeOutEvents: []
+    };
+
+    return employeeRecord;
+}
+
+function createTimeInEvent(employeeRecord, timeStamp) {
+    let [date, hour] = timeStamp.split(' ');
+
+    employeeRecord.timeInEvents.push({
+        type: "TimeIn",
+        hour: parseInt(hour, 10),
+        date: date
+    });
+
+    return employeeRecord;
+}
+
+function createTimeOutEvent(employeeRecord, timeStamp) {
+    let [date, hour] = timeStamp.split(' ');
+
+    employeeRecord.timeOutEvents.push({
+        type: "TimeOut",
+        hour: parseInt(hour, 10),
+        date: date
+    });
+
+    return employeeRecord;
+}
 
 While the bar set by the tests is at one level, you can turn this into a robust
 application, if you so desire!
@@ -197,21 +241,7 @@ function's expected behavior.
 
 ### `createEmployeeRecord`
 
-* **Argument(s)**
-  * A 4-element Array of a `String`, `String`, `String`, and `Number`
-    corresponding to a first name, family name, title, and pay rate per hour
-* **Returns**
-  * JavaScript `Object` with keys:
-    * `firstName`
-    * `familyName`
-    * `title`
-    * `payPerHour`
-    * `timeInEvents`
-    * `timeOutEvents`
-* **Behavior**
-  * Loads `Array` elements into corresponding `Object` properties.
-    _Additionally_, initialize empty `Array`s on the properties `timeInEvents`
-    and `timeOutEvents`.
+* **.
 
 ### `createEmployeeRecords`
 
